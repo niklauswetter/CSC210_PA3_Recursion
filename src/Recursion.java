@@ -106,8 +106,16 @@ public class Recursion {
      * @return The input with only the even digits remaining in the same
      * order.
      */
-    public static int evenDigits(int n) {
-        return 0;
+    public static int evenDigits(int n)
+    {
+        if(n<0) //Takes care of negative cases
+            return -evenDigits(-n);
+        else if(n==0) //Zero is neither even nor odd so instantly return 0
+            return 0;
+        else if(n%2==0) //If number is even then remove it by integer division by 10 passed recursively
+            return evenDigits(n/10);
+        else //Math tricks to add the odd numbers back on to the end of the recursive call
+            return 10*evenDigits(n/10)+(n%10);
     }
 
     /**
@@ -124,7 +132,8 @@ public class Recursion {
      * @param q
      * @return The result of the mathematical expression.
      */
-    public static int evaluate(Queue<Character> q) {
+    public static int evaluate(Queue<Character> q)
+    {
         return 0;
     }
 
@@ -136,7 +145,20 @@ public class Recursion {
      * any data structures other than the stack passed in as a parameter.
      * @param stack
      */
-    public static void repeatStack(Stack<Integer> stack) {}
+    public static void repeatStack(Stack<Integer> stack)
+    {
+        //Continue until we reach the last element of the stack
+        if(!stack.isEmpty())
+        {
+            //Store first element here so we can pass stack without first element
+            int firstElement = stack.pop();
+            //Recursive call with updated stack
+            repeatStack(stack);
+            //Push original element twice on the returned stack
+            stack.push(firstElement);
+            stack.push(firstElement);
+        }
+    }
 
     /**
      * Write a recursive function that accepts a Queue<Integer>. It
@@ -145,6 +167,14 @@ public class Recursion {
      * the queue passed in as a parameter. You may use a helper function.
      * @param q
      */
-    public static void doubleElements(Queue<Integer> q) {}
+    public static void doubleElements(Queue<Integer> q)
+    {
+        if(!q.isEmpty())
+        {
+            int temp = 2*q.remove();
+            doubleElements(q);
+            q.add(temp);
+        }
+    }
 
 }
