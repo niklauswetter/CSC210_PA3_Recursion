@@ -17,9 +17,46 @@ public class Recursion {
      * 			s2 appears in s1 or -1 if s2 is not contained
      * 			in s1.
      */
+
     public static int indexOf(String s1, String s2)
     {
-        return -1;
+        /**
+         * Make sure neither string has run out of characters to check
+         * exit function if the "internal string" is longer than the "external string"
+         */
+        if(s1.length()==0 || s2.length()==0)
+            return 0;
+        else if (s2.length()>s1.length())
+            return -1;
+        else if(s1.substring(0,1).equals(s2.substring(0,1)))
+        {
+            /**
+             * If we are inside this block it means the first letters of the two strings are the same
+             * The recursive call here stored in index is essentially an implementation of .startsWith()
+             * As long as each call continues to show matching characters the method will be recursively
+             * called until the word is found
+             */
+            int index = indexOf(s1.substring(1),s2.substring(1));
+            if (index==-1)
+                return -1;
+            else
+                return indexOf(s1.substring(1),s2.substring(1));
+        }
+        else
+        {
+            /**
+             * If we are inside this block it means the first letters of the two strings are NOT the same
+             * The recursive call here stored in index continues to search for s2 in s1, moving through s1
+             * a single character at a time
+             * The method will exit if it determines s2 is not in s1, otherwise it will continue adding 1
+             * to the current index as it searches
+             */
+            int index = indexOf(s1.substring(1),s2);
+            if(index==-1)
+                return -1;
+            else
+                return 1+indexOf(s1.substring(1),s2);
+        }
     }
 
     /**
@@ -31,8 +68,31 @@ public class Recursion {
      * @param k
      * @return Returns the number of elements removed from the stack.
      */
-    public static int removeEvenNumbers(Stack<Integer> stack, int k) {
-        return 0;
+    public static int removeEvenNumbers(Stack<Integer> stack, int k)
+    {
+         if(!stack.isEmpty())
+         {
+             //Check if stack is empty then run
+             int firstElement = stack.pop();
+             int counter = 0;
+             boolean deleteFlag = false;
+             //Check if element stored in firstElement is even
+             if(k>0 && firstElement!=0 && firstElement%2==0)
+             {
+                 k--;
+                 counter++;
+                 deleteFlag = true;
+             }
+             //Make the recursive call here, passing stack with first item removed, and incremented k
+             counter+=removeEvenNumbers(stack,k);
+             //Re-add the non-deleted elements after recursive call to avoid rescanning integers
+             if(!deleteFlag)
+                 stack.push(firstElement);
+             //Return counter at the end of each run through
+             return counter;
+         }
+         //Return 0 when the stack is empty, meaning we are finished
+         return 0;
     }
 
     /**
