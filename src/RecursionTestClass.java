@@ -214,15 +214,25 @@ public class RecursionTestClass
     public void testDoubleElements1()
     {
         Queue<Integer> q = new LinkedList<Integer>();
-        for(int i = 0;i<11;i++)
-            q.add(i);
+        {
+            q.add(2);
+            q.add(4);
+            q.add(2357);
+            q.add(-4);
+            q.add(0);
+        }
+        System.out.println(q);
         Queue<Integer> qA = new LinkedList<Integer>();
-        for (int i=0;i<11;i++)
-            q.add(2*i);
+        {
+            qA.add(4);
+            qA.add(8);
+            qA.add(4714);
+            qA.add(-8);
+            qA.add(0);
+        }
+        System.out.println(qA);
         Recursion.doubleElements(q);
         boolean result = q.equals(qA);
-        for(int i:q)
-            System.out.print(q+", ");
         System.out.println();
         System.out.println("Queues match: "+result);
         assertEquals(result,true);

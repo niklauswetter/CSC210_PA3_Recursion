@@ -134,6 +134,25 @@ public class Recursion {
      */
     public static int evaluate(Queue<Character> q)
     {
+        //((3*4)+5)
+        int total = 0;
+        char temp = q.remove();
+        if(Character.isDigit(temp))
+        {
+            total+=Character.getNumericValue(temp);
+            char nextChar = q.remove();
+            if(nextChar=='(')
+            if(nextChar=='+')
+            {
+                char nextNextChar = q.remove();
+                total+=nextNextChar;
+            }
+            else if(nextChar=='*')
+            {
+                char nextNextChar = q.remove();
+                total*=nextNextChar;
+            }
+        }
         return 0;
     }
 
@@ -169,12 +188,22 @@ public class Recursion {
      */
     public static void doubleElements(Queue<Integer> q)
     {
-        if(!q.isEmpty())
+        //Make recursive call through helper function to get around length parameter issue
+        doubleElementsHelper(q,q.size());
+    }
+
+    public static void doubleElementsHelper(Queue<Integer> q, int length)
+    {
+        //Exit when queue is empty
+        if(length>0)
         {
             int temp = 2*q.remove();
-            doubleElements(q);
             q.add(temp);
+            //Recursive function call, pass queue with doubled value added to back, length-1
+            doubleElementsHelper(q,length-1);
         }
     }
+
+
 
 }
